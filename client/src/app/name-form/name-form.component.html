@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Name Form</h1>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nameField">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nameField"
+        [(ngModel)]="name"
+        name="nameField"
+        required>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
