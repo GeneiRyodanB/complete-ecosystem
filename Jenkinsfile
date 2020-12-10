@@ -4,13 +4,15 @@ node {
             checkout scm
         }
         stage('Build') {
-            sh 'mvn -B -DskipTests clean package /server'
+            sh 'cd ./server'
+            sh 'mvn -B -DskipTests clean package'
         }
         stage('Test') {
+            sh 'cd ./server'
             sh 'mvn test'
         }
         stage('Stash jar file') {
-            stash includes: 'target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
+            stash includes: 'server/target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
         }
     }
 }
