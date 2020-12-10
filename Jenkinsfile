@@ -19,7 +19,7 @@ node {
         unstash 'binary'
     }
     stage('build and push Docker image') {
-        def customImage = docker.build("geneiryodan/basic-server:${env.BUILD_ID}")
+        def customImage = docker.build("geneiryodan/basic-server:${env.BUILD_ID}", "./server")
         customImage.push()
         customImage.push('latest')
     }
