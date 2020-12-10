@@ -1,5 +1,5 @@
 node {
-    docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
+    docker.image('maven:3.6.3-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
         stage('Pull repository') {
             checkout scm
         }
