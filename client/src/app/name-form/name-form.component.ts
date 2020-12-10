@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GreetingService } from '../greeting/greeting.service';
 
 @Component({
   selector: 'app-name-form',
@@ -9,13 +10,13 @@ export class NameFormComponent implements OnInit {
 
   name: string;
 
-  constructor() { }
+  constructor(private greetingService: GreetingService) {}
 
   ngOnInit() {
   }
 
   onSubmit() {
-    console.log('Name variable is ' + this.name);
+    this.greetingService.getGreeting(this.name);
   }
 
 }
