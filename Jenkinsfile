@@ -20,7 +20,10 @@ node {
     }
     stage('build and push Docker image') {
         def customImage = docker.build("geneiryodan/basic-server:${env.BUILD_ID}", "./server")
-        customImage.push()
-        customImage.push('latest')
+        docker.withRegistry('http://registry.hub.docker.com', 'docker-registery'){
+            customImage.push()
+            customImage.push('latest')
+        }
+        
     }
 }
