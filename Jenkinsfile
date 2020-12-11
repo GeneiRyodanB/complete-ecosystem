@@ -45,7 +45,7 @@ node {
           checkout scm
         }
         stage('Install npm') {
-          sh 'npm install --prefix client client'
+          sh 'npm install --prefix ./client ./client'
         }
         stage('Build') {
           sh 'npm run build --prod --prefix client'
