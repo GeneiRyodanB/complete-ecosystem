@@ -4,13 +4,13 @@ node {
             checkout scm
         }
         stage('Build') {
-            sh 'mvn -B -DskipTests clean package -f ./server'
+            sh 'mvn -B -DskipTests clean package'
         }
         stage('Test') {
-            sh 'mvn test -f ./server'
+            sh 'mvn test'
         }
         stage('Stash jar file') {
-            stash includes: 'server/target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
+            stash includes: 'target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
         }
     }
 }
@@ -19,7 +19,7 @@ node {
         unstash 'binary'
     }
     stage('build and push Docker image') {
-        def customImage = docker.build("geneiryodan/basic-server:${env.BUILD_ID}", "./server")
+        def customImage = docker.build("geneiryodan/basic-server:${env.BUILD_ID}")
         docker.withRegistry('http://registry.hub.docker.com', 'docker-registery'){
             customImage.push()
             customImage.push('latest')

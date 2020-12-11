@@ -1,3 +1,2 @@
-FROM nginx
-EXPOSE 80
-COPY /dist/client/ /usr/share/nginx/html
+FROM node:alpine
+RUN npm install -g @angular/cli
