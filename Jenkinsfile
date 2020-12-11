@@ -48,7 +48,7 @@ node {
           sh 'npm install --prefix client client'
         }
         stage('Build') {
-          sh 'ng build --prod client/'
+          sh 'npm run build --prod --prefix client'
         }
         stage('Stash dist folder') {
           stash includes: 'client/dist/**/*', name: 'distFolder'
