@@ -1,4 +1,7 @@
 node {
+  stage('Who am I') {
+    sh 'whoami'
+  }
     docker.image('maven:3.6.3-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
         stage('Pull repository') {
             checkout scm
@@ -15,6 +18,9 @@ node {
     }
 }
 node {
+    stage('Who am I') {
+      sh 'whoami'
+    }
     stage('Unstash jar file') {
         unstash 'binary'
     }
