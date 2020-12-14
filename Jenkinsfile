@@ -29,6 +29,9 @@ node {
 }
 
 node('test') {
+  stage('Pull repository') {
+    checkout scm
+  }
   stage('Build ng image') {
     def customNodeImage = docker.build("node-with-ng", "client")
     customNodeImage.inside {
