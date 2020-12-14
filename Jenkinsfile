@@ -29,6 +29,9 @@ node {
 }
 
 node('test') {
+  stage('Who am I') {
+    sh 'whoami'
+  }
   stage('Pull repository') {
     checkout scm
   }
