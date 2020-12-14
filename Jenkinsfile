@@ -28,7 +28,7 @@ node {
     }
 }
 
-node {
+node('test') {
   stage('Build ng image') {
     def customNodeImage = docker.build("node-with-ng", "client")
     customNodeImage.inside {
