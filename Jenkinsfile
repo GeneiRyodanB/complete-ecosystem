@@ -51,7 +51,7 @@ node('test') {
         * nonsense breaks with HOME=/, e.g.:
         * EACCES: permission denied, mkdir '/.config'
         */
-        'HOME=.',
+        //'HOME=.',
       ]) {
         stage('Pull repository') {
           checkout scm
