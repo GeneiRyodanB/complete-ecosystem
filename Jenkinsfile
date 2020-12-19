@@ -41,7 +41,7 @@ node('test') {
   stage('Pull repository') {
     checkout scm
   }
-  stage('Build ng image') {
+  // stage('Build ng image') {
     /*def customNodeImage = docker.build("node-with-ng", "client")
     customNodeImage.inside {
       withEnv([
@@ -53,9 +53,9 @@ node('test') {
         */
         //'HOME=.',
       //]) {
-        stage('Pull repository') {
-          checkout scm
-        }
+        // stage('Pull repository') {
+        //   checkout scm
+        // }
         stage('Install npm') {
           sh 'npm install --prefix ./client ./client'
         }
@@ -69,7 +69,7 @@ node('test') {
 
       
     //}
-  }
+  // }
 }
 node {
   stage('Unstash dist folder') {
