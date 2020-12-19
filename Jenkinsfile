@@ -42,7 +42,7 @@ node('test') {
     checkout scm
   }
   stage('Build ng image') {
-    def customNodeImage = docker.build("node-with-ng", "client")
+    /*def customNodeImage = docker.build("node-with-ng", "client")
     customNodeImage.inside {
       withEnv([
         /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
@@ -52,7 +52,7 @@ node('test') {
         * EACCES: permission denied, mkdir '/.config'
         */
         //'HOME=.',
-      ]) {
+      //]) {
         stage('Pull repository') {
           checkout scm
         }
@@ -68,7 +68,7 @@ node('test') {
       }
 
       
-    }
+    //}
   }
 }
 node {
