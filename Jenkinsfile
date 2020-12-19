@@ -65,7 +65,7 @@ node('test') {
         stage('Stash dist folder') {
           stash includes: 'client/dist/**/*', name: 'distFolder'
         }
-      }
+      //}
 
       
     //}
