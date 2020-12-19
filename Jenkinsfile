@@ -83,7 +83,7 @@ node {
   }
 
   stage('Build Docker image') {
-    def customImage = docker.build("geneiryodan/basic-client:${env.BUILD_ID}", "client/dockerfiles/nginx")
+    def customImage = docker.build("geneiryodan/basic-client:${env.BUILD_ID}", "-f dockerfiles/nginx/Dockerfile ./client")
     stage('Push Docker image'){
       docker.withRegistry('http://registry.hub.docker.com', 'docker-registery'){
             customImage.push()
