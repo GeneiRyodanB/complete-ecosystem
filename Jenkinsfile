@@ -73,8 +73,11 @@ node('test') {
 }
 node {
   stage('Unstash dist folder') {
-    unstash 'distFolder'
+    dir('/opt/jenkins_artifacts'){
+      unstash 'distFolder'
+    }
   }
+
   stage('Build Docker image') {
     def customImage = docker.build("geneiryodan/basic-client:${env.BUILD_ID}", "client/dockerfiles/nginx")
     stage('Push Docker image'){
