@@ -41,21 +41,21 @@ node('test') {
   stage('Pull repository') {
     checkout scm
   }
-  // stage('Build ng image') {
-    /*def customNodeImage = docker.build("node-with-ng", "client")
+  stage('Build ng image') {
+    def customNodeImage = docker.build("node-with-ng", "client")
     customNodeImage.inside {
       withEnv([
         /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-        //'npm_config_cache=npm-cache',
+        'npm_config_cache=npm-cache',
         /* set home to our current directory because other bower
         * nonsense breaks with HOME=/, e.g.:
         * EACCES: permission denied, mkdir '/.config'
         */
         //'HOME=.',
-      //]) {
-        // stage('Pull repository') {
-        //   checkout scm
-        // }
+      ]) {
+        stage('Pull repository') {
+          checkout scm
+        }
         stage('Install npm') {
           sh 'npm install --prefix ./client ./client'
         }
@@ -65,11 +65,11 @@ node('test') {
         stage('Stash dist folder') {
           stash includes: 'client/dist/**/*', name: 'distFolder'
         }
-      //}
+      }
 
       
-    //}
-  // }
+    }
+  }
 }
 node {
   stage('Unstash dist folder') {
