@@ -1,3 +1,3 @@
 FROM nginx
 EXPOSE 80
-COPY /dist/client/ /usr/share/nginx/html
+COPY /distFolder /usr/share/nginx/html
