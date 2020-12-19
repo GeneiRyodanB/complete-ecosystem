@@ -79,7 +79,7 @@ node {
   }
 
   stage('pwd ls') {
-      sh 'ls'
+      sh 'ls client'
   }
 
   stage('Build Docker image') {
