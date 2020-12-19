@@ -1,7 +1,7 @@
 node {
-  stage('Who am I') {
-    sh 'whoami'
-  }
+  // stage('Who am I') {
+  //   sh 'whoami'
+  // }
     docker.image('maven:3.6.3-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
         stage('Pull repository') {
             checkout scm
@@ -18,9 +18,9 @@ node {
     }
 }
 node {
-    stage('Who am I') {
-      sh 'whoami'
-    }
+    // stage('Who am I') {
+    //   sh 'whoami'
+    // }
     stage('Unstash jar file') {
         unstash 'binary'
     }
@@ -35,9 +35,9 @@ node {
 }
 
 node('test') {
-  stage('Who am I') {
-    sh 'whoami'
-  }
+  // stage('Who am I') {
+  //   sh 'whoami'
+  // }
   stage('Pull repository') {
     checkout scm
   }
@@ -66,16 +66,20 @@ node('test') {
           stash includes: 'client/dist/**/*', name: 'distFolder'
         }
       }
-
-      
     }
   }
 }
 node {
   stage('Unstash dist folder') {
-    dir('/opt/jenkins_artifacts'){
       unstash 'distFolder'
-    }
+  }
+
+  stage('pwd where am I') {
+      sh 'pwd'
+  }
+
+  stage('pwd ls') {
+      sh 'ls'
   }
 
   stage('Build Docker image') {
