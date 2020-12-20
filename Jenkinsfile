@@ -26,8 +26,8 @@ node {
             sh 'mvn test -f server/'
         }
         stage('publish to nexus') {
-          steps {
-            script {
+          //steps {
+            //script {
               pom = readMavenPom file "server/pom.xml";
               filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
               echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
@@ -60,8 +60,8 @@ node {
               } else {
                 error "*** File: ${artifactPath}, could not be found";
               }
-            }
-          }
+            //}
+          //}
         }
 
         stage('Stash jar file') {
