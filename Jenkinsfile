@@ -44,7 +44,7 @@ node {
                   groupId: pom.groupId,
                   version: pom.version,
                   repository: NEXUS_REPOSITORY,
-                  credentialsId: NEXUS_CREDENTIALS_ID,
+                  credentialsId: "nexus-credentials",
                   artifacts: [
                     [artifactId: pom.artifactId,
                     classifier: '',
