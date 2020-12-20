@@ -38,12 +38,12 @@ node {
                 echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version: ${pom.version}";
 
                 nexusArtifactUploader(
-                  nexusVersion: NEXUS_VERSION,
-                  protocol: NEXUS_PROTOCOL,
-                  nexusUrl: NEXUS_URL,
+                  nexusVersion: "nexus3",
+                  protocol: "http",
+                  nexusUrl: "18.212.248.125:8081",
                   groupId: pom.groupId,
                   version: pom.version,
-                  repository: NEXUS_REPOSITORY,
+                  repository: "repository-example",
                   credentialsId: "nexus-credentials",
                   artifacts: [
                     [artifactId: pom.artifactId,
