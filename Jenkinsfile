@@ -2,7 +2,20 @@ node {
   // stage('Who am I') {
   //   sh 'whoami'
   // }
-    docker.image('maven:3.6.3-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
+  docker.image('maven:3.6.3-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
+    withEnv([
+        /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
+        'NEXUS_VERSION="nexus3"',
+        'NEXUS_PROTOCOL="http"',
+        'NEXUS_URL="18.212.248.125:8081"',
+        'NEXUS_REPOSITORY="repository-example"',
+        'NEXUS_CREDENTIALS_ID="nexus-credentials"'
+        /* set home to our current directory because other bower
+        * nonsense breaks with HOME=/, e.g.:
+        * EACCES: permission denied, mkdir '/.config'
+        */
+        //'HOME=.',
+      ]) {
         stage('Pull repository') {
             checkout scm
         }
@@ -12,10 +25,50 @@ node {
         stage('Test') {
             sh 'mvn test -f server/'
         }
+        stage('publish to nexus') {
+          steps {
+            script {
+              pom = readMavenPom file "server/pom.xml";
+              filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+              echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+              artifactPath = filesByGlob[0].path;
+              artifactExists = fileExists artifactPath
+
+              if(artifactExists) {
+                echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version: ${pom.version}";
+
+                nexusArtifactUploader(
+                  nexusVersion: NEXUS_VERSION,
+                  protocol: NEXUS_PROTOCOL,
+                  nexusUrl: NEXUS_URL,
+                  groupId: pom.groupId,
+                  version: pom.version,
+                  repository: NEXUS_REPOSITORY,
+                  credentialsId: NEXUS_CREDENTIALS_ID,
+                  artifacts: [
+                    [artifactId: pom.artifactId,
+                    classifier: '',
+                    file: artifactPath,
+                    type: pom.packaging],
+
+                    [artifactId: pom.artifactId,
+                    classifier: '',
+                    file: "server/pom.xml",
+                    type: "pom"],
+                  ]
+                )
+              } else {
+                error "*** File: ${artifactPath}, could not be found";
+              }
+            }
+          }
+        }
+
         stage('Stash jar file') {
             stash includes: 'server/target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
         }
-    }
+      }
+  }
 }
 node {
     // stage('Who am I') {
@@ -72,14 +125,6 @@ node('test') {
 node {
   stage('Unstash dist folder') {
       unstash 'distFolder'
-  }
-
-  stage('pwd where am I') {
-      sh 'pwd'
-  }
-
-  stage('pwd ls') {
-      sh 'ls client'
   }
 
   stage('Build Docker image') {
