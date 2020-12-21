@@ -31,7 +31,7 @@ node {
         
 
         stage('Stash jar file') {
-            stash includes: 'server/target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
+            stash includes: 'server/target/*.jar', name: 'binary'
         }
       }
   }
@@ -44,8 +44,8 @@ node {
         unstash 'binary'
     }
     stage('publish to nexus') {
-          def mvnTool = tool 'M3'
-          sh "${mvnTool}/bin/mvn install -f server/" 
+          //def mvnTool = tool 'M3'
+          //sh "${mvnTool}/bin/mvn install -f server/" 
           //steps {
             //script {
               pom = readMavenPom file: "server/pom.xml";
