@@ -19,8 +19,17 @@ node {
         stage('Pull repository') {
             checkout scm
         }
+        stage('pwd') {
+            sh 'pwd'
+        }
         stage('Build') {
             sh 'mvn -B -DskipTests clean package -f server/'
+        }
+        stage('ls') {
+            sh 'ls'
+        }
+        stage('ls /root/.m2') {
+            sh 'ls /root'
         }
         stage('Test') {
             sh 'mvn test -f server/'
