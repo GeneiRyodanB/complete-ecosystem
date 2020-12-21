@@ -45,7 +45,7 @@ node {
     }
     stage('publish to nexus') {
           def mvnTool = tool 'M3'
-          sh "${mvnTool}/bin/mvn install server/" 
+          sh "${mvnTool}/bin/mvn install -f server/" 
           //steps {
             //script {
               pom = readMavenPom file: "server/pom.xml";
