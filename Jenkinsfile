@@ -2,7 +2,7 @@ node {
   // stage('Who am I') {
   //   sh 'whoami'
   // }
-  docker.image('maven:3.6.3-jdk-11').withRun('-v $HOME/.m2:/root/.m2') {
+  docker.image('maven:3.6.3-jdk-11').withRun('-v $HOME/.m2:/root/.m2').inside() {
     withEnv([
         /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
         'NEXUS_VERSION="nexus3"',
