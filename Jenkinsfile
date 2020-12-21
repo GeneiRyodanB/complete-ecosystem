@@ -28,7 +28,22 @@ node {
         stage('Test') {
             sh 'mvn test -f server/'
         }
-        stage('publish to nexus') {
+        
+
+        stage('Stash jar file') {
+            stash includes: 'server/target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
+        }
+      }
+  }
+}
+node {
+    // stage('Who am I') {
+    //   sh 'whoami'
+    // }
+    stage('Unstash jar file') {
+        unstash 'binary'
+    }
+    stage('publish to nexus') {
           def mvnTool = tool 'M3'
           sh "${mvnTool}/bin/mvn install server/" 
           //steps {
@@ -67,21 +82,7 @@ node {
               }
             //}
           //}
-        }
-
-        stage('Stash jar file') {
-            stash includes: 'server/target/server-0.0.1-SNAPSHOT.jar', name: 'binary'
-        }
       }
-  }
-}
-node {
-    // stage('Who am I') {
-    //   sh 'whoami'
-    // }
-    stage('Unstash jar file') {
-        unstash 'binary'
-    }
     stage('build and push Docker image') {
         def customImage = docker.build("geneiryodan/basic-server:${env.BUILD_ID}", "server")
         docker.withRegistry('http://registry.hub.docker.com', 'docker-registery'){
