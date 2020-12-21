@@ -29,6 +29,8 @@ node {
             sh 'mvn test -f server/'
         }
         stage('publish to nexus') {
+          def mvnTool = tool 'Maven_3_6_3'
+          sh "${mvnTool}/bin/mvn install server/" 
           //steps {
             //script {
               pom = readMavenPom file: "server/pom.xml";
