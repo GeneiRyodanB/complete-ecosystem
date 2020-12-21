@@ -7,7 +7,7 @@ node {
         /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
         'NEXUS_VERSION="nexus3"',
         'NEXUS_PROTOCOL="http"',
-        'NEXUS_URL="18.212.248.125:8081"',
+        'NEXUS_URL="3.88.163.197:8081"',
         'NEXUS_REPOSITORY="repository-example"',
         'NEXUS_CREDENTIALS_ID="nexus-credentials"'
         /* set home to our current directory because other bower
@@ -49,7 +49,7 @@ node {
                 nexusArtifactUploader(
                   nexusVersion: "nexus3",
                   protocol: "http",
-                  nexusUrl: "18.212.248.125:8081",
+                  nexusUrl: "3.88.163.197:8081",
                   groupId: pom.groupId,
                   version: pom.version,
                   repository: "repository-example",
