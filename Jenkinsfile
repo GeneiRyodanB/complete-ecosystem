@@ -2,7 +2,7 @@ node {
   // stage('Who am I') {
   //   sh 'whoami'
   // }
-  docker.image('maven:3.6.3-jdk-11').inside('-u root -v $HOME/.m2:/root/.m2') {
+  docker.image('maven:3.6.3-jdk-11').inside('-v $HOME/.m2:/root/.m2') {
     withEnv([
         /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
         'NEXUS_VERSION="nexus3"',
@@ -24,15 +24,6 @@ node {
         }*/
         stage('Build') {
             sh 'mvn -B -DskipTests clean package -f server/'
-        }
-        /*stage('ls') {
-            sh 'ls'
-        }
-        stage('ls /root/.m2') {
-            sh 'ls /root'
-        }*/
-        stage('ls /root/.m2') {
-            sh 'ls /root/.m2'
         }
         stage('Test') {
             sh 'mvn test -f server/'
