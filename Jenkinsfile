@@ -29,7 +29,7 @@ node {
             sh 'mvn test -f server/'
         }
         stage('publish to nexus') {
-          def mvnTool = tool 'Maven_3_6_3'
+          def mvnTool = tool 'M3'
           sh "${mvnTool}/bin/mvn install server/" 
           //steps {
             //script {
