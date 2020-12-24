@@ -3,6 +3,7 @@ node {
   //   sh 'whoami'
   // }
   properties([pipelineTriggers([pollSCM('')])])
+
   
   docker.image('maven:3.6.3-jdk-11').inside('-v /var/lib/jenkins/.m2:/root/.m2') {
     withEnv([
