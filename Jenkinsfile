@@ -4,7 +4,6 @@ node {
   // }
   properties([pipelineTriggers([pollSCM('')])])
 
-  
   docker.image('maven:3.6.3-jdk-11').inside('-v /var/lib/jenkins/.m2:/root/.m2') {
     withEnv([
         /* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
